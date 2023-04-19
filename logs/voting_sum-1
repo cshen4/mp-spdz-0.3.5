@@ -1,0 +1,13 @@
+Using security parameter 40
+Using security parameter 40
+  Type bit
+          1173        Triples
+Significant amount of unused triples of Shamir gf2n_. For more accurate benchmarks, consider reducing the batch size with --batch-size.
+Note that some protocols have larger minimum batch sizes.
+Broadcasting 4.4e-05 MB in 3 rounds, taking 0.00512441 seconds
+Partial broadcasting 0.18312 MB in 100 rounds, taking 0.244086 seconds
+Sending/receiving 0.281216 MB in 13 rounds, taking 0.0512069 seconds
+The following benchmarks are including preprocessing (offline phase).
+Time = 0.38316 seconds 
+Data sent = 0.647544 MB
+Global data sent = 2.22362 MB (all parties)

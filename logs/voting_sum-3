@@ -1,0 +1,10 @@
+Using security parameter 40
+Significant amount of unused bits of Shamir gfp. For more accurate benchmarks, consider reducing the batch size with --batch-size.
+Note that some protocols have larger minimum batch sizes.
+The following benchmarks are including preprocessing (offline phase).
+Time = 16.563 seconds 
+Data sent = 0 MB in ~36 rounds (party 3; use '-v' for more details)
+Global data sent = 1.96285 MB (all parties)
+This program might benefit from some protocol options.
+Consider adding the following at the beginning of 'voting_sum.mpc':
+	program.use_edabit(True)

@@ -1,0 +1,22 @@
+Using security parameter 40
+Using security parameter 40
+candidate_vote: [65536, 65536, 65536]
+candidate_vote: [131072, 131072, 131072]
+candidate_vote: [196608, 196608, 196608]
+candidate_vote: [262144, 262144, 262144]
+index: 1, current_sum: 393216
+index: 2, current_sum: 589824
+index: 3, current_sum: 786432
+maximum: 786432
+winning index: 3
+  Type bit
+          1173        Triples
+Significant amount of unused triples of Shamir gf2n_. For more accurate benchmarks, consider reducing the batch size with --batch-size.
+Note that some protocols have larger minimum batch sizes.
+Broadcasting 4.4e-05 MB in 3 rounds, taking 0.00505226 seconds
+Partial broadcasting 0.18312 MB in 100 rounds, taking 0.244546 seconds
+Sending/receiving 0.562208 MB in 13 rounds, taking 0.0800562 seconds
+The following benchmarks are including preprocessing (offline phase).
+Time = 0.409166 seconds 
+Data sent = 0.928536 MB
+Global data sent = 2.22362 MB (all parties)
