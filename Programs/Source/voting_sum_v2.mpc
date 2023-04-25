@@ -18,7 +18,7 @@ from Compiler.library import print_ln, do_while, for_range
 from Compiler.util import if_else
 
 PORTNUM = 14000
-MAX_NUM_CLIENTS = 5
+MAX_NUM_CLIENTS = 10
 n_rounds = 0
 n_threads = 2
 CANDIDATE_NUM = 4
@@ -36,25 +36,24 @@ def close_connections(number_clients):
     def _(i):
         closeclientconnection(i)
 
-def client_input(t, client_socket_id):
+def client_input(client_socket_id):
     """
     Send share of random value, receive input and deduce share.
     """
     
-    return sint.receive_from_client(4, client_socket_id)
+    return sint.receive_from_client(CANDIDATE_NUM, client_socket_id)
 
 
 def determine_winner(number_clients, client_values, client_ids):
     """Work out and return client_id which corresponds to max client_value"""
-    print_ln("client_values: %s", client_values.reveal())
     max_value = Array(1, client_values.value_type)
-    max_value[0] = sum([client_values[x][0] for x in range(CANDIDATE_NUM)])
+    max_value[0] = sum(client_values[0])
     win_candidate_index = Array(1, sint)
     win_candidate_index[0] = 0
 
-    @for_range(number_clients-1)
+    @for_range(CANDIDATE_NUM - 1)
     def loop_body(i):
-        candidate_sum = sum([client_values[x][i+1] for x in range(CANDIDATE_NUM)])
+        candidate_sum = sum(client_values[i+1])
         # Is this client input a new maximum, will be sint(1) if true, else sint(0)
         is_new_max = max_value[0] < candidate_sum
         # Keep latest max_value
@@ -63,6 +62,7 @@ def determine_winner(number_clients, client_values, client_ids):
         win_candidate_index[0] = if_else(is_new_max, i+1, win_candidate_index[0])
 
     print_ln('maximum: %s', max_value[0].reveal())
+    print_ln('winning candidate index: %s', win_candidate_index[0].reveal())
     return win_candidate_index[0]
 
 
@@ -107,26 +107,27 @@ def main():
             @if_(last == 1)
             def _():
                 number_clients.write(client_id + 1)
-
             return (sum(seen) < number_clients) + (number_clients == 0)
 
         def type_run(t):
             # Clients secret input.
-            client_values = sint.Matrix(MAX_NUM_CLIENTS, CANDIDATE_NUM)
+            client_values = sint.Matrix(CANDIDATE_NUM, MAX_NUM_CLIENTS)
 
             @for_range_multithread(n_threads, 1, number_clients)
             def _(client_id):
                 input = client_input(client_id)
-                print_ln("client_input: %s", input.reveal())
-                client_values[client_id] = input
+                # @for_range(CANDIDATE_NUM)
+                # def _(i):
+                for candidate_index in range(CANDIDATE_NUM):
+                    client_values[candidate_index][client_id] = input[candidate_index]
 
             winning_client_id = determine_winner(number_clients, client_values,
                                                  client_ids)
 
             # print_ln('Found winner, index: %s.', winning_client_id.reveal())
 
-            write_winner_to_clients(client_sockets, number_clients,
-                                    winning_client_id)
+            # write_winner_to_clients(client_sockets, number_clients,
+            #                         winning_client_id)
 
         type_run(sint)
         # type_run(sfix)

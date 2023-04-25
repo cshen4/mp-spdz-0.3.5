@@ -32,10 +32,10 @@ def create_client(client_id, n_parties, vote_vector, finish):
         os.Send(socket)
 
     # for x in vote_vector:
-    client.send_private_inputs([domain(x)])
+    client.send_private_inputs([domain(x) for x in vote_vector])
 
-    print('Winning client id is :',
-              client.receive_outputs(domain, 1)[0].v)
+    # print('Winning client id is :',
+    #           client.receive_outputs(domain, 1)[0].v)
 
 if __name__ == "__main__":
     if len(sys.argv) != 5:
