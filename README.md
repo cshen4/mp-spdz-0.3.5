@@ -1,3 +1,13 @@
+# Run Vote Benchmarking
+
+./compile.py voting_sum_v2 1
+Scripts/setup-ssl.sh <nparties>
+Scripts/setup-clients.sh 3
+python3 ExternalIO/voting-sum-client.py <nparties> <vote_vectors_file> <num_candidates> <client_num>
+PLAYERS=<nparties> Scripts/<protocol>.sh voting_sum_v2-1 &
+
+note: example vote_vectors_file - ExternalIO/voting_sum.txt
+
 # Multi-Protocol SPDZ [![Documentation Status](https://readthedocs.org/projects/mp-spdz/badge/?version=latest)](https://mp-spdz.readthedocs.io/en/latest/?badge=latest) [![Build Status](https://dev.azure.com/data61/MP-SPDZ/_apis/build/status/data61.MP-SPDZ?branchName=master)](https://dev.azure.com/data61/MP-SPDZ/_build/latest?definitionId=7&branchName=master) [![Gitter](https://badges.gitter.im/MP-SPDZ/community.svg)](https://gitter.im/MP-SPDZ/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 This is a software to benchmark various secure multi-party computation
