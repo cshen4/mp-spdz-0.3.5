@@ -1,0 +1,43 @@
+from Compiler.util import if_else
+
+
+player_num = 3
+candidate_num = 2
+votes_per_player = 2
+candidate_votes = Matrix(candidate_num, player_num * votes_per_player, sint)
+
+# use @for_range_opt for balanced optimization
+# but use Python loops if compile-time numbers are need (e.g., for players)
+@for_range_opt(votes_per_player)
+def _(vote_index):
+    for candidate_index in range(candidate_num):
+        for player_index in range(player_num):
+            col_index = (player_index * votes_per_player) + vote_index
+            candidate_votes[candidate_index][col_index] = sfix.get_input_from(player_index)
+            # print_ln('candidate_index: %s, player_index: %s, vote_index: %s, vote: %s', candidate_index, player_index, vote_index, candidate_votes[candidate_index][col_index].reveal())
+
+for candidate_vote in candidate_votes:
+    print_ln('candidate_vote: %s', candidate_vote.reveal())
+
+max_value = Array(1, sint)
+max_value[0] = sum(candidate_votes[0])
+win_candidate_index = Array(1, sint)
+win_candidate_index[0] = 0
+print_ln("index: %s, current_sum: %s", 0, max_value[0].reveal())
+
+
+@for_range(candidate_num-1)
+def loop_body(offset):
+    index = 1 + offset;
+    candidate_sum = sum(candidate_votes[index])
+    print_ln("index: %s, current_sum: %s", index, candidate_sum.reveal())
+    # Is this client input a new maximum, will be sint(1) if true, else sint(0)
+    is_new_max = max_value[0] < candidate_sum
+    # Keep latest max_value
+    max_value[0] = if_else(is_new_max, candidate_sum, max_value[0])
+    # Keep current winning client id
+    win_candidate_index[0] = if_else(is_new_max, index, win_candidate_index[0])
+
+print_ln('maximum: %s', max_value[0].reveal())
+print_ln('winning index: %s', win_candidate_index[0].reveal())
+
