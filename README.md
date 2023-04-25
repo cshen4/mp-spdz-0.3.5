@@ -1,10 +1,14 @@
 # Run Vote Benchmarking
 
-./compile.py voting_sum_v2 1
-Scripts/setup-ssl.sh <nparties>
-Scripts/setup-clients.sh 3
-python3 ExternalIO/voting-sum-client.py <nparties> <vote_vectors_file> <num_candidates> <client_num>
-PLAYERS=<nparties> Scripts/<protocol>.sh voting_sum_v2-1 &
+`./compile.py voting_sum_v2 1`
+
+`Scripts/setup-ssl.sh <nparties>`
+
+`Scripts/setup-clients.sh 3`
+
+`python3 ExternalIO/voting-sum-client.py <nparties> <vote_vectors_file> <num_candidates> <client_num>`
+
+`PLAYERS=<nparties> Scripts/<protocol>.sh voting_sum_v2-1 &`
 
 note: example vote_vectors_file - ExternalIO/voting_sum.txt
 
