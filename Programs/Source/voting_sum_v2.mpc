@@ -18,13 +18,15 @@ from Compiler.library import print_ln, do_while, for_range
 from Compiler.util import if_else
 
 PORTNUM = 14000
-MAX_NUM_CLIENTS = 10
+MAX_NUM_CLIENTS = 100
 n_rounds = 0
 n_threads = 2
 CANDIDATE_NUM = 4
 
 if len(program.args) > 1:
     n_rounds = int(program.args[1])
+    CANDIDATE_NUM = int(program.args[2])
+    MAX_NUM_CLIENTS = int(program.args[3])
 
 def accept_client():
     client_socket_id = accept_client_connection(PORTNUM)
@@ -100,6 +102,7 @@ def main():
             @if_(client_id >= MAX_NUM_CLIENTS)
             def _():
                 print_ln('client id too high')
+                print_ln(MAX_NUM_CLIENTS)
                 crash()
             client_sockets[client_id] = client_id
             client_ids[client_id] = client_id
@@ -138,6 +141,9 @@ def main():
 
     if n_rounds > 0:
         print('run %d rounds' % n_rounds)
+        print('num candidate %d' % CANDIDATE_NUM)
+        print('num clients %d' % MAX_NUM_CLIENTS)
+
         for_range(n_rounds)(game_loop)
     else:
         print('run forever')
