@@ -1,0 +1,28 @@
+Using security parameter 40
+candidate_vote: [1, 2, 1]
+candidate_vote: [2, 1, 2]
+candidate_vote: [3, 4, 4]
+candidate_vote: [4, 3, 3]
+c112
+8.0
+Invalid votes
+c112
+8.0
+Invalid votes
+c112
+8.0
+Invalid votes
+index: 1, current_sum: 5
+index: 2, current_sum: 11
+index: 3, current_sum: 10
+maximum: 11
+winning index: 2
+Significant amount of unused bits of Shamir gfp. For more accurate benchmarks, consider reducing the batch size with --batch-size.
+Note that some protocols have larger minimum batch sizes.
+The following benchmarks are including preprocessing (offline phase).
+Time = 0.372703 seconds 
+Data sent = 0.65296 MB in ~54 rounds (party 0; use '-v' for more details)
+Global data sent = 1.14536 MB (all parties)
+This program might benefit from some protocol options.
+Consider adding the following at the beginning of 'voting_sum_with_verify.mpc':
+	program.use_edabit(True)
